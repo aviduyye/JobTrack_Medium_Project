@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}JobTrack{% endblock %} | JobTrack</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">J</span><span>JobTrack</span></a>
+      <p class="side-label">WORKSPACE</p>
+      <a class="side-link active" href="{{ url_for('dashboard') }}"><span>▦</span> Dashboard</a>
+      <a class="side-link" href="{{ url_for('add_application') }}"><span>＋</span> Add application</a>
+      <a class="side-link" href="{{ url_for('export_csv') }}"><span>⇩</span> Export CSV</a>
+      <div class="sidebar-bottom">
+        <div class="mini-avatar">JT</div>
+        <div><strong>My Job Search</strong><small>Personal workspace</small></div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div><span class="top-kicker">CAREER WORKSPACE</span><h1>{% block heading %}Dashboard{% endblock %}</h1></div>
+        <a class="button button-primary" href="{{ url_for('add_application') }}">＋ Add application</a>
+      </header>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-area">
+            {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+      <footer>JobTrack · Organize your search. Focus on your next opportunity.</footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block heading %}{{ page_title }}{% endblock %}
+{% block content %}
+<section class="form-intro"><h2>Capture the details.</h2><p>Keep important information about the opportunity together.</p></section>
+<form class="panel application-form" method="POST">
+  <div class="form-section-title"><span>01</span><div><h3>Job details</h3><p>Company and role information</p></div></div>
+  <div class="form-grid">
+    <label>Company name <span>*</span><input name="company" required value="{{ application.get('company', '') }}" placeholder="e.g. Infosys"></label>
+    <label>Job role <span>*</span><input name="role" required value="{{ application.get('role', '') }}" placeholder="e.g. Python Developer"></label>
+    <label>Location<input name="location" value="{{ application.get('location', '') }}" placeholder="e.g. Pune / Remote"></label>
+    <label>Job type<select name="job_type">{% for item in ['Full-time','Internship','Part-time','Contract','Remote'] %}<option {% if application.get('job_type', 'Full-time') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+    <label>Status<select name="status">{% for item in statuses %}<option {% if application.get('status', 'Wishlist') == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+    <label>Applied date<input type="date" name="applied_date" value="{{ application.get('applied_date', '') }}"></label>
+    <label>Salary / stipend<input name="salary" value="{{ application.get('salary', '') }}" placeholder="e.g. ₹4 LPA or ₹15,000/month"></label>
+    <label>Job posting link<input type="url" name="job_link" value="{{ application.get('job_link', '') }}" placeholder="https://..."></label>
+  </div>
+  <div class="form-section-title notes-title"><span>02</span><div><h3>Notes & follow-up</h3><p>Add reminders, recruiter details, or interview preparation notes</p></div></div>
+  <label class="notes-label">Notes<textarea name="notes" rows="4" placeholder="What should you remember about this opportunity?">{{ application.get('notes', '') }}</textarea></label>
+  <div class="form-actions"><a class="button button-light" href="{{ url_for('dashboard') }}">Cancel</a><button class="button button-primary" type="submit">{{ 'Save changes' if application_id is defined else 'Save application' }}</button></div>
+</form>
+{% endblock %}
